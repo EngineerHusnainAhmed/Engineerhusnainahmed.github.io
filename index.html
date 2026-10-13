@@ -1,1596 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Husnain Ahmed | Electrical Engineer & Network Operations</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #00d4ff;
-            --secondary: #0099cc;
-            --dark: #0a0e27;
-            --darker: #050817;
-            --light: #e6f7ff;
-            --accent: #ff6b35;
-            --text: #c3d1e6;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --link-color: #4ade80;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--darker);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 153, 204, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Header/Hero Section */
-        header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .profile-section {
-            text-align: center;
-            animation: fadeInLeft 1s ease-out;
-        }
-
-        .profile-img-container {
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 2rem;
-            position: relative;
-            border-radius: 50%;
-            padding: 5px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .profile-img-container:hover {
-            transform: scale(1.05);
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--darker);
-            background-color: var(--dark);
-            display: block;
-        }
-
-        .hero-content {
-            animation: fadeInRight 1s ease-out;
-        }
-
-        .greeting {
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            color: var(--light);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .title {
-            font-size: 1.8rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--text);
-            max-width: 600px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--dark);
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 5%;
-            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            color: var(--light);
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* Experience Section */
-        .timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: var(--card-bg);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-item:hover {
-            transform: translateX(10px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -3rem;
-            top: 2.5rem;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .company {
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .role {
-            color: var(--light);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .duration {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .timeline-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .timeline-content li {
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .skill-category h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--primary);
-            color: var(--dark);
-            transform: scale(1.05);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-        }
-
-        .project-content {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-header {
-            margin-bottom: 1rem;
-        }
-
-        .project-title {
-            color: var(--light);
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .project-description {
-            color: var(--text);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            flex-grow: 1;
-        }
-
-        .project-link {
-            margin-top: 1.5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--link-color);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.75rem 1.25rem;
-            border: 1px solid var(--link-color);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            width: fit-content;
-        }
-
-        .project-link:hover {
-            background: var(--link-color);
-            color: var(--dark);
-            transform: translateX(5px);
-        }
-
-        .project-link svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .project-highlights {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0, 212, 255, 0.1);
-        }
-
-        .highlight-tag {
-            display: inline-block;
-            background: rgba(255, 107, 53, 0.2);
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* All Projects Detailed Section */
-        .project-categories {
-            margin-top: 3rem;
-        }
-
-        .category-header {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.1));
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-header:hover {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 153, 204, 0.2));
-            transform: translateX(10px);
-        }
-
-        .category-title {
-            color: var(--light);
-            font-size: 1.5rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .category-count {
-            background: var(--primary);
-            color: var(--dark);
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .detailed-project {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .detailed-project:hover {
-            border-left-color: var(--primary);
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.1);
-        }
-
-        .project-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .project-lab {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-item {
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            color: var(--secondary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.85rem;
-        }
-
-        .project-outcomes {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(255, 107, 53, 0.05);
-            border-radius: 10px;
-            border-left: 3px solid var(--accent);
-        }
-
-        .project-outcomes strong {
-            color: var(--accent);
-        }
-
-        /* Education & Certs */
-        .education-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .education-info h3 {
-            color: var(--light);
-            margin-bottom: 0.5rem;
-        }
-
-        .education-info .institution {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .grade {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--dark);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .course-item {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 0.75rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--primary);
-            font-size: 0.9rem;
-        }
-
-        /* Contact Section */
-        .contact-container {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text);
-            text-decoration: none;
-            padding: 1rem 2rem;
-            background: var(--card-bg);
-            border-radius: 50px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            background: var(--primary);
-            color: var(--dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: var(--dark);
-            border-top: 1px solid rgba(0, 212, 255, 0.1);
-            color: var(--text);
-            font-size: 0.9rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .profile-img-container {
-                width: 200px;
-                height: 200px;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .timeline {
-                padding-left: 2rem;
-            }
-
-            .education-card {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .category-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Husnain Ahmed — Electrical Engineer focused on power systems, control, sustainable energy and reliable infrastructure." />
+  <title>Husnain Ahmed — Electrical Engineer</title>
+  <style>
+    :root{
+      --navy:#0f2230;
+      --navy-2:#17384a;
+      --ink:#16212a;
+      --muted:#60707c;
+      --paper:#ffffff;
+      --soft:#f5f7f8;
+      --line:#d9e1e5;
+      --line-strong:#b9c6cd;
+      --blue:#2f6479;
+      --blue-soft:#e9f1f4;
+      --amber:#b8802b;
+      --green:#2f6d63;
+      --max:1180px;
+      --shadow:0 18px 45px rgba(15,34,48,.08);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Inter,Arial,sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+      line-height:1.62;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit}
+    img{display:block;max-width:100%}
+    .shell{width:min(var(--max),calc(100% - 40px));margin:0 auto}
+
+    /* top navigation */
+    .topbar{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.02em}
+    .brand-mark{
+      width:36px;height:36px;border:1.5px solid var(--navy);display:grid;place-items:center;
+      font-size:.78rem;letter-spacing:.08em;font-weight:800;position:relative;
+    }
+    .brand-mark:before,.brand-mark:after{content:"";position:absolute;background:var(--navy)}
+    .brand-mark:before{width:8px;height:1px;left:-5px;top:17px}
+    .brand-mark:after{width:8px;height:1px;right:-5px;top:17px}
+    .nav-links{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0}
+    .nav-links a{text-decoration:none;font-size:.92rem;color:#354550;font-weight:600}
+    .nav-links a:hover{color:var(--blue)}
+    .nav-cta{border:1px solid var(--navy)!important;padding:9px 14px;color:var(--navy)!important}
+
+    /* hero */
+    .hero{
+      position:relative;overflow:hidden;
+      background:
+        linear-gradient(rgba(15,34,48,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(15,34,48,.035) 1px,transparent 1px),
+        linear-gradient(180deg,#fbfcfd 0%,#fff 100%);
+      background-size:36px 36px,36px 36px,auto;
+      border-bottom:1px solid var(--line);
+    }
+    .hero:before{
+      content:"";position:absolute;right:-120px;top:-160px;width:520px;height:520px;border-radius:50%;
+      border:1px solid rgba(47,100,121,.14);box-shadow:0 0 0 54px rgba(47,100,121,.035),0 0 0 108px rgba(47,100,121,.025);
+    }
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(330px,.7fr);gap:66px;align-items:center;padding:92px 0 78px}
+    .eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .eyebrow:before{content:"";width:30px;height:2px;background:var(--blue)}
+    h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(3.35rem,6.2vw,6.6rem);line-height:.96;letter-spacing:-.055em;margin:0;max-width:780px;color:var(--navy)}
+    .hero-role{margin:26px 0 0;font-size:1.2rem;font-weight:700;color:#31434f}
+    .hero-copy{max-width:760px;margin:18px 0 0;color:var(--muted);font-size:1.05rem}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .button{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:750;font-size:.92rem;padding:12px 16px;border:1px solid var(--line-strong);background:#fff;transition:.18s ease}
+    .button.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+    .button:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,34,48,.08)}
+
+    .hero-panel{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:22px;position:relative}
+    .hero-panel:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--amber))}
+    .portrait{aspect-ratio:4/4.6;overflow:hidden;background:#eef2f4;border:1px solid #e1e7ea}
+    .portrait img{width:100%;height:100%;object-fit:cover}
+    .profile-fallback{height:100%;display:grid;place-items:center;font-family:Georgia,serif;font-size:4rem;color:#74838d}
+    .signal-line{margin:18px 0 4px;height:38px}
+    .signal-line svg{width:100%;height:100%}
+    .fact-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-top:14px}
+    .fact{padding:13px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .fact-label{font-size:.69rem;text-transform:uppercase;letter-spacing:.11em;color:#7b8992;font-weight:800}
+    .fact-value{margin-top:4px;font-size:.95rem;font-weight:750;color:#263844}
+
+    .status-strip{background:var(--navy);color:#e9eff2;border-bottom:4px solid var(--amber)}
+    .status-inner{display:flex;justify-content:space-between;align-items:center;gap:26px;padding:17px 0;font-size:.94rem}
+    .status-inner strong{color:#fff}
+    .status-link{color:#fff;text-underline-offset:4px}
+
+    /* shared section */
+    section{padding:82px 0;border-bottom:1px solid var(--line)}
+    .section-grid{display:grid;grid-template-columns:250px minmax(0,1fr);gap:58px}
+    .section-kicker{font-size:.76rem;text-transform:uppercase;letter-spacing:.15em;color:var(--blue);font-weight:800;margin-bottom:10px}
+    .section-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,3.3vw,3.15rem);line-height:1.05;letter-spacing:-.035em;font-weight:500;color:var(--navy);margin:0}
+    .section-note{margin:15px 0 0;color:var(--muted);font-size:.94rem;max-width:235px}
+
+    /* engineering motifs */
+    .technical-rule{height:16px;position:relative;margin:20px 0 0}
+    .technical-rule:before{content:"";position:absolute;left:0;right:0;top:7px;height:1px;background:var(--line)}
+    .technical-rule:after{content:"";position:absolute;left:0;top:3px;width:8px;height:8px;border:1.5px solid var(--blue);background:#fff}
+
+    .interest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .interest{padding:20px 20px 22px;border:1px solid var(--line);background:#fff;position:relative;min-height:150px}
+    .interest:before{content:"";position:absolute;left:-1px;top:20px;width:3px;height:34px;background:var(--blue)}
+    .interest h3{font-size:1rem;margin:0 0 8px;color:#203541}
+    .interest p{margin:0;color:var(--muted);font-size:.9rem}
+
+    .pub-card{margin-top:24px;border:1px solid var(--line);background:var(--soft);padding:24px 26px;position:relative}
+    .pub-card:after{content:"R";position:absolute;right:18px;top:10px;font-family:Georgia,serif;font-size:3rem;color:rgba(47,100,121,.08)}
+    .pub-title{margin:0 0 7px;font-family:Georgia,serif;font-size:1.28rem;color:var(--navy)}
+    .pub-meta{font-size:.92rem;color:var(--muted)}
+
+    /* projects */
+    .project{border:1px solid var(--line);background:#fff;display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:22px;padding:24px;align-items:start}
+    .project+.project{margin-top:14px}
+    .project-index{font-family:Consolas,"Courier New",monospace;font-size:.82rem;font-weight:800;color:var(--blue);padding-top:3px}
+    .project h3{margin:0;font-size:1.2rem;color:#203440}
+    .meta{margin-top:4px;color:var(--amber);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+    .project p{margin:12px 0 0;color:var(--muted);font-size:.94rem}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+    .tag{font-size:.76rem;padding:5px 8px;background:var(--blue-soft);border:1px solid #d6e3e8;color:#355a69;font-weight:700}
+    .project-link{font-size:.88rem;font-weight:750;text-decoration:none;border-bottom:1px solid #9caeb7;padding-bottom:2px;white-space:nowrap}
+    .project-link:hover{color:var(--blue)}
+
+    details{border:1px solid var(--line);background:#fff;padding:0 18px;margin-top:14px}
+    summary{cursor:pointer;padding:16px 0;font-weight:750;list-style:none;display:flex;justify-content:space-between}
+    summary::-webkit-details-marker{display:none}
+    summary:after{content:"+";color:var(--blue)}
+    details[open] summary:after{content:"−"}
+    .detail-body{padding:0 0 18px;color:var(--muted);font-size:.92rem}
+
+    /* experience */
+    .timeline{position:relative}
+    .timeline:before{content:"";position:absolute;left:10px;top:10px;bottom:12px;width:1px;background:var(--line-strong)}
+    .job{position:relative;padding-left:46px;padding-bottom:34px}
+    .job:last-child{padding-bottom:0}
+    .job:before{content:"";position:absolute;left:4px;top:7px;width:13px;height:13px;border:2px solid var(--blue);background:#fff;transform:rotate(45deg)}
+    .job-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+    .job h3{margin:0;font-size:1.16rem;color:#203541}
+    .job-company{margin-top:2px;font-weight:700;color:var(--blue)}
+    .job-date{font-family:Consolas,"Courier New",monospace;color:#70808a;font-size:.84rem;white-space:nowrap}
+    .job ul{margin:13px 0 0;padding-left:18px;color:var(--muted)}
+    .job li+li{margin-top:6px}
+
+    /* education & skills */
+    .edu-card{border:1px solid var(--line);padding:26px;background:#fff}
+    .edu-card+.edu-card{margin-top:14px}
+    .edu-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+    .edu-card h3{margin:0;font-size:1.2rem;color:#203541}
+    .edu-inst{margin-top:4px;color:var(--blue);font-weight:700}
+    .grade-pill{border:1px solid var(--line-strong);padding:7px 11px;font-size:.84rem;font-weight:800;white-space:nowrap;background:var(--soft)}
+    .course-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}
+    .course{font-size:.79rem;padding:5px 8px;border:1px solid var(--line);background:#fafcfc;color:#596a74}
+
+    .skills-columns{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .skill-block{border:1px solid var(--line);padding:22px 22px 23px;background:#fff;position:relative}
+    .skill-block:after{content:"";position:absolute;right:14px;top:14px;width:28px;height:14px;border-top:1px solid var(--line-strong);border-right:1px solid var(--line-strong)}
+    .skill-block h3{margin:0 0 10px;font-size:1rem;color:#203541}
+    .skill-block p{margin:0;color:var(--muted);font-size:.91rem;line-height:1.8}
+
+    .contact-panel{background:var(--navy);color:#fff;padding:44px 46px;border-top:5px solid var(--amber);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;position:relative;overflow:hidden}
+    .contact-panel:after{content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border:1px solid rgba(255,255,255,.09);border-radius:50%;box-shadow:0 0 0 38px rgba(255,255,255,.025),0 0 0 76px rgba(255,255,255,.018)}
+    .contact-panel .section-kicker{color:#9fc8d5}
+    .contact-panel h2{font-family:Georgia,serif;font-weight:500;font-size:clamp(2rem,4vw,3.7rem);line-height:1.02;letter-spacing:-.04em;margin:0;max-width:740px}
+    .contact-panel p{margin:16px 0 0;color:#bdc9cf;max-width:690px}
+    .contact-links{display:flex;flex-wrap:wrap;gap:9px;justify-content:flex-end;position:relative;z-index:2}
+    .contact-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.24);padding:10px 13px;font-size:.88rem;font-weight:750}
+    .contact-links a:hover{background:#fff;color:var(--navy)}
+
+    footer{padding:28px 0 40px;color:#71808a;font-size:.85rem}
+    .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .48s ease,transform .48s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:920px){
+      .nav-links{display:none}
+      .hero-grid{grid-template-columns:1fr;gap:38px;padding:62px 0}
+      .hero-panel{max-width:530px}
+      .section-grid{grid-template-columns:1fr;gap:28px}
+      .section-note{max-width:700px}
+      .interest-grid{grid-template-columns:1fr 1fr}
+      .contact-panel{grid-template-columns:1fr}
+      .contact-links{justify-content:flex-start}
+    }
+    @media(max-width:660px){
+      .shell{width:min(var(--max),calc(100% - 28px))}
+      h1{font-size:3.2rem}
+      .hero-grid{padding:48px 0}
+      .fact-grid{grid-template-columns:1fr}
+      .status-inner{align-items:flex-start;flex-direction:column;gap:7px}
+      section{padding:62px 0}
+      .interest-grid,.skills-columns{grid-template-columns:1fr}
+      .project{grid-template-columns:1fr}
+      .project-index{padding:0}
+      .job-top,.edu-top{flex-direction:column}
+      .job-date{white-space:normal}
+      .contact-panel{padding:30px 24px}
+    }
+  </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="Husnain Ahmed home">
+        <span class="brand-mark">HA</span><span>Husnain Ahmed</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a class="nav-cta" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo">HA.</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#all-projects">All Projects</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Electrical Engineer · Power · Control · Energy</div>
+          <h1>Engineering systems that stay stable, efficient and reliable.</h1>
+          <p class="hero-role">Husnain Ahmed · Network Engineer at Nayatel</p>
+          <p class="hero-copy">Electrical engineer with hands-on experience spanning power-system analysis, renewable-energy modelling, feedback control, industrial automation and large-scale network operations. My research interests sit at the intersection of intelligent control, electric power and resilient infrastructure.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Selected engineering work</a>
+            <a class="button" href="Husnain_Ahmed_CV_Updated.pdf" target="_blank" rel="noopener">Download CV</a>
+            <a class="button" href="mailto:husnain7810@gmail.com">Email</a>
+          </div>
         </div>
-    </nav>
 
-    <header id="about">
-        <div class="hero-container">
-            <div class="profile-section">
-                <div class="profile-img-container">
-                    <!-- YOUR PROFILE PHOTO -->
-                    <img src="profile.jpg" alt="Husnain Ahmed" class="profile-img" id="profile-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'280\' height=\'280\' viewBox=\'0 0 280 280\'%3E%3Crect width=\'280\' height=\'280\' fill=\'%230a0e27\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'72\' fill=\'%2300d4ff\'%3EHA%3C/text%3E%3C/svg%3E'">
-                </div>
-                <div style="color: var(--primary); font-size: 1.1rem; margin-top: 1rem;">
-                    <span style="display: block; margin-bottom: 0.5rem;">📍 Wah, Pakistan</span>
-                    <span style="display: block;">⚡ Electrical Engineer</span>
-                </div>
-            </div>
-            <div class="hero-content">
-                <div class="greeting">Electrical Engineer & Network Specialist</div>
-                <h1>Husnain Ahmed</h1>
-                <div class="title">Operation Engineer at Nayatel</div>
-                <p class="tagline">
-                    Specialized in core network operations, IP/MPLS systems, and power systems engineering. 
-                    Experienced in optimizing FTTH networks, VoIP systems, and automation solutions impacting 20,000+ families. 
-                    Passionate about sustainable energy and intelligent control systems.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="#all-projects" class="btn btn-secondary">View All Projects</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section id="experience">
-        <h2 class="section-title">Work Experience</h2>
-        <div class="timeline">
-            <div class="timeline-item fade-in">
-                <div class="timeline-header">
-                    <div>
-                        <div class="company">NAYATEL – Islamabad, Pakistan</div>
-                        <div class="role">Operation Engineer</div>
-                    </div>
-                    <div class="duration">June 2025 – Present</div>
-                </div>
-                <div class="timeline-content">
-                    <ul>
-                        <li>Monitored and optimized core network operations including IP/MPLS, routing, switching, and VoIP systems</li>
-                        <li>Ensured high availability and reliability of services impacting over 20,000+ families</li>
-                        <li>Implemented performance monitoring tools, proactively identifying faults to minimize downtime</li>
-                        <li>Coordinated cross-functional teams for capacity planning and SLA compliance improvement</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-header">
-                    <div>
-                        <div class="company">NAYATEL – Islamabad, Pakistan</div>
-                        <div class="role">Network Support Engineer</div>
-                    </div>
-                    <div class="duration">Aug 2024 – June 2025</div>
-                </div>
-                <div class="timeline-content">
-                    <ul>
-                        <li>Provided L1/L2 technical support for FTTH, routing, switching, and VoIP networks</li>
-                        <li>Configured and troubleshot network devices (ONTs, routers, switches) using diagnostic tools (ping, traceroute, port diagnostics)</li>
-                        <li>Escalated complex incidents to NOC, improving MTTR and customer satisfaction</li>
-                        <li>Served 5000+ families with high service uptime maintenance</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-header">
-                    <div>
-                        <div class="company">IESCO (Islamabad Electric Supply Company)</div>
-                        <div class="role">Engineering Intern</div>
-                    </div>
-                    <div class="duration">July 2023 – Sept 2023</div>
-                </div>
-                <div class="timeline-content">
-                    <ul>
-                        <li>Assisted in preventive maintenance, reducing unplanned outages by 15%</li>
-                        <li>Identified and resolved electrical faults, ensuring minimal system downtime</li>
-                        <li>Implemented preventive maintenance schedules, decreasing equipment failures by 25%</li>
-                        <li>Analyzed and resolved power quality issues including voltage fluctuations</li>
-                        <li>Participated in grid modernization and emerging technology training</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <aside class="hero-panel reveal" aria-label="Profile summary">
+          <div class="portrait">
+            <img src="profile.jpg" alt="Husnain Ahmed" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=&quot;profile-fallback&quot;>HA</div>'" />
+          </div>
+          <div class="signal-line" aria-hidden="true">
+            <svg viewBox="0 0 600 60" preserveAspectRatio="none">
+              <path d="M0,31 H80 L95,31 L110,12 L126,50 L142,31 H230 L244,31 L258,20 L273,42 L289,31 H380 L394,31 L410,8 L426,52 L442,31 H600" fill="none" stroke="#2f6479" stroke-width="2"/>
+              <path d="M0,31 H600" fill="none" stroke="#d8e2e6" stroke-width="1" stroke-dasharray="5 6"/>
+            </svg>
+          </div>
+          <div class="fact-grid">
+            <div class="fact"><div class="fact-label">Degree</div><div class="fact-value">B.Sc. Electrical Engineering</div></div>
+            <div class="fact"><div class="fact-label">CGPA</div><div class="fact-value">3.59 / 4.00</div></div>
+            <div class="fact"><div class="fact-label">IELTS</div><div class="fact-value">7.0 Overall</div></div>
+            <div class="fact"><div class="fact-label">Base</div><div class="fact-value">Wah, Pakistan</div></div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <section id="skills">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-category fade-in">
-                <h3>⚡ Power Systems</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">PSS/E</span>
-                    <span class="skill-tag">Power Flow Analysis</span>
-                    <span class="skill-tag">Fault Analysis</span>
-                    <span class="skill-tag">Protection Systems</span>
-                    <span class="skill-tag">High Voltage Engineering</span>
-                    <span class="skill-tag">PV Watts</span>
-                    <span class="skill-tag">Helioscope</span>
-                    <span class="skill-tag">Power Factor Correction</span>
-                </div>
-            </div>
+    <div class="status-strip">
+      <div class="shell status-inner">
+        <div><strong>2027 research focus:</strong> funded MSc/PhD opportunities in power systems, sustainable energy, control and power electronics.</div>
+        <a class="status-link" href="#contact">Discuss a research opportunity →</a>
+      </div>
+    </div>
 
-            <div class="skill-category fade-in">
-                <h3>🌐 Networking & Telecom</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">IP/MPLS</span>
-                    <span class="skill-tag">FTTH</span>
-                    <span class="skill-tag">VoIP</span>
-                    <span class="skill-tag">Routing & Switching</span>
-                    <span class="skill-tag">Network Monitoring</span>
-                    <span class="skill-tag">ONT Configuration</span>
-                    <span class="skill-tag">OSA</span>
-                </div>
-            </div>
-
-            <div class="skill-category fade-in">
-                <h3>💻 Programming & Simulation</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">MATLAB/Simulink</span>
-                    <span class="skill-tag">Arduino IDE</span>
-                    <span class="skill-tag">C/C++</span>
-                    <span class="skill-tag">CX-Programmer</span>
-                    <span class="skill-tag">LTspice</span>
-                    <span class="skill-tag">Proteus</span>
-                    <span class="skill-tag">ModelSim</span>
-                    <span class="skill-tag">AutoCAD</span>
-                    <span class="skill-tag">SketchUp 3D</span>
-                    <span class="skill-tag">NI-MultiSim</span>
-                </div>
-            </div>
-
-            <div class="skill-category fade-in">
-                <h3>🔧 Hardware & Automation</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">PLC Programming</span>
-                    <span class="skill-tag">PID Control</span>
-                    <span class="skill-tag">PCB Design</span>
-                    <span class="skill-tag">Microcontrollers</span>
-                    <span class="skill-tag">Industrial Automation</span>
-                    <span class="skill-tag">Servo Motors</span>
-                    <span class="skill-tag">Soldering</span>
-                </div>
-            </div>
+    <section id="research">
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Research direction</div>
+          <h2 class="section-title">Where I want to go deeper.</h2>
+          <p class="section-note">Built from practical work in grids, control, automation and networked infrastructure.</p>
+          <div class="technical-rule"></div>
         </div>
+        <div>
+          <div class="interest-grid">
+            <article class="interest reveal"><h3>Smart grids & operation</h3><p>Grid analysis, stability, protection, monitoring and distributed-energy integration.</p></article>
+            <article class="interest reveal"><h3>Renewable integration</h3><p>Solar-energy modelling, grid interaction, energy conversion and renewable-rich networks.</p></article>
+            <article class="interest reveal"><h3>Control & optimisation</h3><p>Feedback control, modelling, dynamic behaviour and optimisation of electrical systems.</p></article>
+            <article class="interest reveal"><h3>Power electronics & drives</h3><p>Converter control, electric drives and power-electronic interfaces for energy and mobility.</p></article>
+            <article class="interest reveal"><h3>Cyber-physical infrastructure</h3><p>Monitoring, fault isolation and resilient operation across interconnected engineering systems.</p></article>
+            <article class="interest reveal"><h3>Industrial automation</h3><p>PLC logic, instrumentation, embedded control and practical engineering automation.</p></article>
+          </div>
+          <div class="pub-card reveal">
+            <div class="section-kicker" style="margin-bottom:8px">Research output</div>
+            <h3 class="pub-title">Design and Control of Ball Balancing System</h3>
+            <div class="pub-meta">Conference presentation · 9th MDSRIC · 2024 · Control systems / real-time feedback</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        
-        <div class="projects-grid">
-            <!-- Project 1: Ball Balancing -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Ball Balancing System with PID Control</h3>
-                        <div class="project-date">Final Year Project 2023-2024</div>
-                    </div>
-                    <p class="project-description">
-                        Developed a Proportional-Integral-Derivative (PID) controller to stabilize a ball on a plate using a resistive touch panel for accurate position sensing. Integrated mechanical engineering, electrical control systems, and advanced algorithms.
-                    </p>
-                    <a href="https://drive.google.com/drive/u/1/folders/16_WP1EG0a_GG9lr-f_bFoed0Sz073qm8" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">Control Systems</span>
-                        <span class="highlight-tag">PID Tuning</span>
-                        <span class="highlight-tag">Real-time Control</span>
-                        <span class="highlight-tag">Mechanical Integration</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2: Solar Farm -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Solar Farm Design for University of Gujrat</h3>
-                        <div class="project-date">Oct-Nov 2023</div>
-                    </div>
-                    <p class="project-description">
-                        Led the design of a 1.5MW solar installation utilizing 833 monocrystalline panels (550W each). Optimized positioning using Helioscope and real irradiation data from PV Watts.
-                    </p>
-                    <a href="https://drive.google.com/drive/u/1/folders/1Rd8US4vO8OqJey0L_LggcFsIYrLBUrYV" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">Solar Design</span>
-                        <span class="highlight-tag">1.5MW Capacity</span>
-                        <span class="highlight-tag">Helioscope</span>
-                        <span class="highlight-tag">PV Watts</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3: Robotic Arm -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Robotic Arm Control</h3>
-                        <div class="project-date">Mar-Apr 2022</div>
-                    </div>
-                    <p class="project-description">
-                        Designed a 4-DOF robotic arm using servo motors and wood construction. Implemented PWM control with Arduino, simulated in Proteus, and verified signals with oscilloscope.
-                    </p>
-                    <a href="https://drive.google.com/file/d/1VgfiYZcjYkBjSyc3qSuiaogYwkQKk-v2/view" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">Robotics</span>
-                        <span class="highlight-tag">Arduino</span>
-                        <span class="highlight-tag">4-DOF</span>
-                        <span class="highlight-tag">Proteus</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4: Irrigation -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Automated Irrigation System</h3>
-                        <div class="project-date">Mar-Apr 2024</div>
-                    </div>
-                    <p class="project-description">
-                        Developed an automated agricultural irrigation system using CX-Programmer and CX-Designer. Implemented ladder logic to streamline irrigation processes.
-                    </p>
-                    <a href="https://drive.google.com/drive/u/1/folders/10j7vgQzY2l6LrUvf1PSztRDKkPUS5fLc" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">PLC</span>
-                        <span class="highlight-tag">Ladder Logic</span>
-                        <span class="highlight-tag">Automation</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 5: Power Analysis -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Power System Analysis Suite</h3>
-                        <div class="project-date">Apr-May 2023</div>
-                    </div>
-                    <p class="project-description">
-                        Comprehensive analysis using IEEE 14-bus and 5-bus systems. Implemented Load Flow and Fault Analysis using Newton-Raphson, Fast Decoupled, and Gauss-Seidel methods in PSS/E.
-                    </p>
-                    <a href="https://drive.google.com/drive/u/1/folders/1AMAV4EwZpNuAwqIHeEGf5OnGhiqrCwzc" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">PSS/E</span>
-                        <span class="highlight-tag">MATLAB</span>
-                        <span class="highlight-tag">IEEE Standards</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6: Power Factor -->
-            <div class="project-card fade-in">
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3 class="project-title">Power Factor Correction using Capacitor Bank</h3>
-                        <div class="project-date">Apr-May 2023</div>
-                    </div>
-                    <p class="project-description">
-                        Designed and implemented a Capacitor Bank to improve power factor. Utilized various capacitors, choke for inductive load, and light bulbs for resistive load simulation with 5A circuit breaker protection.
-                    </p>
-                    <a href="https://drive.google.com/drive/u/1/folders/1QiScGlNfeoaHvkVXFCjsZJE4hYamB9YP" class="project-link" target="_blank">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Project Photos
-                    </a>
-                    <div class="project-highlights">
-                        <span class="highlight-tag">Power Factor</span>
-                        <span class="highlight-tag">Capacitor Bank</span>
-                        <span class="highlight-tag">Energy Meter</span>
-                    </div>
-                </div>
-            </div>
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Selected engineering work</div>
+          <h2 class="section-title">Projects with technical depth.</h2>
+          <p class="section-note">A concise selection focused on power, control and automation.</p>
+          <div class="technical-rule"></div>
         </div>
+        <div>
+          <article class="project reveal">
+            <div class="project-index">P-01</div>
+            <div>
+              <h3>Ball Balancing System — Real-Time PID Control</h3>
+              <div class="meta">Final Year Design Project · 2023–2024</div>
+              <p>Developed a closed-loop ball-balancing platform using resistive touch-panel feedback, NEMA 17 stepper actuation and PID control. The project combined sensing, actuation, controller tuning and real-time electromechanical integration.</p>
+              <div class="tags"><span class="tag">PID control</span><span class="tag">MATLAB</span><span class="tag">Arduino</span><span class="tag">NEMA 17</span><span class="tag">Real-time control</span></div>
+            </div>
+            <a class="project-link" href="https://drive.google.com/drive/u/1/folders/16_WP1EG0a_GG9lr-f_bFoed0Sz073qm8" target="_blank" rel="noopener">View ↗</a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-index">P-02</div>
+            <div>
+              <h3>~8 MW Solar PV Design — University of Gujrat</h3>
+              <div class="meta">Power Systems Design · 2023</div>
+              <p>Designed and assessed a large solar-PV installation using HelioScope and PVWatts irradiation data. The design used 14,538 monocrystalline 550 W modules and focused on layout, positioning and energy-yield considerations.</p>
+              <div class="tags"><span class="tag">HelioScope</span><span class="tag">PVWatts</span><span class="tag">Solar PV</span><span class="tag">Energy modelling</span></div>
+            </div>
+            <a class="project-link" href="https://drive.google.com/drive/u/1/folders/1Rd8US4vO8OqJey0L_LggcFsIYrLBUrYV" target="_blank" rel="noopener">View ↗</a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-index">P-03</div>
+            <div>
+              <h3>IEEE 5-Bus & 14-Bus Load-Flow / Fault Analysis</h3>
+              <div class="meta">Power System Analysis · 2023</div>
+              <p>Modelled IEEE test systems using PSS/E and MATLAB. Applied Newton–Raphson, Fast Decoupled and Gauss–Seidel methods and studied balanced and unbalanced fault cases.</p>
+              <div class="tags"><span class="tag">PSS/E</span><span class="tag">MATLAB</span><span class="tag">Load flow</span><span class="tag">Fault analysis</span></div>
+            </div>
+            <a class="project-link" href="https://drive.google.com/drive/u/1/folders/1AMAV4EwZpNuAwqIHeEGf5OnGhiqrCwzc" target="_blank" rel="noopener">View ↗</a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-index">P-04</div>
+            <div>
+              <h3>Antenna Azimuth Control — Lead/Lag & PID Compensation</h3>
+              <div class="meta">Control Systems · 2022</div>
+              <p>Modelled an antenna azimuth positioning system and designed lead, lag and PID compensators in MATLAB/Simulink to study transient response, stability and tracking behaviour.</p>
+              <div class="tags"><span class="tag">MATLAB/Simulink</span><span class="tag">Lead-Lag</span><span class="tag">PID</span><span class="tag">Dynamic systems</span></div>
+            </div>
+            <a class="project-link" href="https://drive.google.com/file/d/1lpvXVXEiGGDTQBdoulDRiC18gkVrUgHl/view" target="_blank" rel="noopener">View ↗</a>
+          </article>
+
+          <details>
+            <summary>Additional academic engineering projects</summary>
+            <div class="detail-body">Robotic arm control with PWM and servo motors · Automated agricultural irrigation using PLC ladder logic · Three-phase induction-motor phase-reversal protection · Transmission-line modelling in MATLAB/Simulink · Power-factor correction using capacitor banks · Instrumentation · Analog communication · DSP and digital-logic projects.</div>
+          </details>
+        </div>
+      </div>
     </section>
 
-    <section id="all-projects">
-        <h2 class="section-title">Complete Project Portfolio</h2>
-        <p style="text-align: center; margin-bottom: 3rem; color: var(--text);">
-            All academic projects with documentation links. Click "View Photos" to see project galleries.
-        </p>
-
-        <!-- Category 1: Control Systems -->
-        <div class="project-categories fade-in">
-            <div class="category-header">
-                <h3 class="category-title">🎛️ Control Systems & Automation</h3>
-                <span class="category-count">5 Projects</span>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Ball Balancing System Control and Design</h4>
-                        <span class="project-lab">Final Year Design Project | 2023-2024</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/16_WP1EG0a_GG9lr-f_bFoed0Sz073qm8" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Developed a Proportional-Integral-Derivative (PID) controller to stabilize a ball on a plate using a resistive touch panel for accurate position sensing. Integrated mechanical engineering, electrical control systems, and advanced algorithms.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">PID Controller</span>
-                    <span class="tech-item">Resistive Touch Panel</span>
-                    <span class="tech-item">MATLAB</span>
-                    <span class="tech-item">Real-time Control</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Automation of Agricultural Irrigation System</h4>
-                        <span class="project-lab">Industrial Automation Lab | Mar-Apr 2024</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/10j7vgQzY2l6LrUvf1PSztRDKkPUS5fLc" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Developed an automated agricultural irrigation system using CX-Programmer and CX-Designer. Implemented ladder logic to streamline and automate irrigation processes.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">CX-Programmer</span>
-                    <span class="tech-item">CX-Designer</span>
-                    <span class="tech-item">Ladder Logic</span>
-                    <span class="tech-item">PLC</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">LEAD, LAG Compensator, and PID Controller for Antenna Azimuth</h4>
-                        <span class="project-lab">Control Systems Lab | Nov-Dec 2022</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1lpvXVXEiGGDTQBdoulDRiC18gkVrUgHl/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Designed and tuned Lead and Lag compensators to improve dynamic response and stability. Implemented PID controller for precise position control using MATLAB/Simulink.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">Lead-Lag Compensators</span>
-                    <span class="tech-item">PID Controller</span>
-                    <span class="tech-item">MATLAB/Simulink</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Control of Robotic Arm</h4>
-                        <span class="project-lab">Microprocessors & Microcontrollers Lab | Mar-Apr 2022</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1VgfiYZcjYkBjSyc3qSuiaogYwkQKk-v2/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Designed and developed a robotic arm using wood and servo motors, achieving four degrees of freedom. Simulated code in Proteus and verified PWM signals with oscilloscope. LCD displayed motor duty cycles based on potentiometer values.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">4-DOF Robotics</span>
-                    <span class="tech-item">Servo Motors</span>
-                    <span class="tech-item">Arduino</span>
-                    <span class="tech-item">Proteus</span>
-                    <span class="tech-item">PWM Control</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Temperature and Pressure Measurement Device</h4>
-                        <span class="project-lab">Instrumentation Lab | Nov-Dec 2023</span>
-                    </div>
-                </div>
-                <p>Developed using BMP180 sensor, Arduino UNO, and 16x2 LCD Display. Coded in Arduino IDE to interface and process sensor data for environmental monitoring.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">BMP180 Sensor</span>
-                    <span class="tech-item">Arduino UNO</span>
-                    <span class="tech-item">16x2 LCD</span>
-                    <span class="tech-item">Sensor Integration</span>
-                </div>
-            </div>
+    <section id="experience">
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Professional experience</div>
+          <h2 class="section-title">Engineering in live systems.</h2>
+          <p class="section-note">Operational work that shaped my interest in reliability, monitoring and resilient infrastructure.</p>
+          <div class="technical-rule"></div>
         </div>
-
-        <!-- Category 2: Power Systems -->
-        <div class="project-categories fade-in">
-            <div class="category-header">
-                <h3 class="category-title">⚡ Power Systems & High Voltage</h3>
-                <span class="category-count">5 Projects</span>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Energy Storage and Solar Farm Positioning Optimization</h4>
-                        <span class="project-lab">Power Systems Design | Oct-Nov 2023</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/1Rd8US4vO8OqJey0L_LggcFsIYrLBUrYV" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Led design of 1.5MW solar installation for University of Gujrat. 833 monocrystalline panels (550W each). Utilized Helioscope and PV Watts for optimization within budget constraints.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">Helioscope</span>
-                    <span class="tech-item">PV Watts</span>
-                    <span class="tech-item">1.5MW Capacity</span>
-                    <span class="tech-item">Monocrystalline Panels</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Load Flow, Power Flow Analysis, and Fault Analysis</h4>
-                        <span class="project-lab">Power System Analysis Lab | Apr-May 2023</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/1AMAV4EwZpNuAwqIHeEGf5OnGhiqrCwzc" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>IEEE 14-bus and 5-bus systems. Newton-Raphson, Fast Decoupled, and Gauss-Seidel methods in PSS/E and MATLAB. Balanced and unbalanced fault simulations.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">PSS/E</span>
-                    <span class="tech-item">MATLAB</span>
-                    <span class="tech-item">IEEE 14-bus</span>
-                    <span class="tech-item">Fault Analysis</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Power Factor Measurement and Correction using Capacitor Bank</h4>
-                        <span class="project-lab">Power Distribution Lab | Apr-May 2023</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/1QiScGlNfeoaHvkVXFCjsZJE4hYamB9YP" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Designed Capacitor Bank with various capacitors, choke for inductive load, light bulbs for resistive load. Included 5A circuit breaker and energy meter for measurements.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">Capacitor Bank</span>
-                    <span class="tech-item">Power Factor</span>
-                    <span class="tech-item">Energy Meter</span>
-                    <span class="tech-item">Circuit Protection</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Phase Reversal Protection of Three-Phase Induction Motor</h4>
-                        <span class="project-lab">Power System Protection Lab | Mar-Apr 2024</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1IeVWAzaBhB9GP4ECO_CI6QIvIRoP4Rce/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Implemented using Magnetic Contactor, Phase Sequence Relay, and essential components. Safeguarded motor against incorrect phase sequence.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">Three-Phase Motors</span>
-                    <span class="tech-item">Phase Sequence Relay</span>
-                    <span class="tech-item">Magnetic Contactor</span>
-                    <span class="tech-item">Protection Systems</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Gold Leaf Electroscope</h4>
-                        <span class="project-lab">High Voltage Lab | Mar-Apr 2024</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1EbOcTJgNRSYeFFvEgEh722uI5x_jifWH/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Constructed using aluminum foil for leaves, PVC pipe for charging, and glass structure for housing. Demonstrated electrostatic principles.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">High Voltage</span>
-                    <span class="tech-item">Electrostatics</span>
-                    <span class="tech-item">Aluminum Foil Construction</span>
-                </div>
-            </div>
+        <div class="timeline">
+          <article class="job reveal"><div class="job-top"><div><h3>Network Engineer</h3><div class="job-company">Nayatel · Islamabad, Pakistan</div></div><div class="job-date">Jul 2026 — Present</div></div><ul><li>Monitor and optimise IP/MPLS, routing, switching and VoIP infrastructure supporting large-scale subscriber services.</li><li>Coordinate capacity planning, service deployment and incident resolution across engineering teams.</li><li>Train and onboard new engineering batches alongside operational responsibilities.</li></ul></article>
+          <article class="job reveal"><div class="job-top"><div><h3>Operation Engineer</h3><div class="job-company">Nayatel · Islamabad, Pakistan</div></div><div class="job-date">Jun 2025 — Jul 2026</div></div><ul><li>Worked on core network operations, performance monitoring, service reliability and fault isolation.</li><li>Collaborated on capacity planning, service deployment, incident resolution and SLA-focused operations.</li></ul></article>
+          <article class="job reveal"><div class="job-top"><div><h3>Network Support Engineer</h3><div class="job-company">Nayatel · Islamabad, Pakistan</div></div><div class="job-date">Aug 2024 — Jun 2025</div></div><ul><li>Provided L1/L2 support across FTTH, routing, switching and VoIP services.</li><li>Configured and troubleshot ONTs, routers and switches using network diagnostic tools and escalation workflows.</li></ul></article>
+          <article class="job reveal"><div class="job-top"><div><h3>Engineering Intern</h3><div class="job-company">Islamabad Electric Supply Company (IESCO)</div></div><div class="job-date">Jul 2023 — Sep 2023</div></div><ul><li>Observed distribution-system operation, preventive maintenance, electrical fault handling and power-quality issues.</li><li>Participated in technical exposure related to grid modernisation and emerging utility technologies.</li></ul></article>
         </div>
-
-        <!-- Category 3: Electronics & Communication -->
-        <div class="project-categories fade-in">
-            <div class="category-header">
-                <h3 class="category-title">📡 Electronics & Communication</h3>
-                <span class="category-count">3 Projects</span>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Amplitude Modulation and Demodulation</h4>
-                        <span class="project-lab">Communication Systems Lab | Nov-Dec 2023</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/18wtwKgKmko4DioMgOJV2YXPM4PuK72VN" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Designed initially in LTspice then hardware implementation. Components: 1.25nF, 1.45nF capacitors, 1mH inductor, 100kohm potentiometer, 1kohm and 2.2kohm resistors.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">AM Modulation</span>
-                    <span class="tech-item">LTspice</span>
-                    <span class="tech-item">Analog Communication</span>
-                    <span class="tech-item">Circuit Design</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">PVI Measurement Module and Transmission Line Model</h4>
-                        <span class="project-lab">Electrical Power Transmission Lab | Oct-Nov 2023</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/1Wvzsb6KRtQ51zZX7kOD8DKe7YFmoTR3n" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>PVI (Phase Voltage Current) Measurement Module and Transmission Line Model using MATLAB SIMULINK. Improved power distribution efficiency by detecting phase voltage imbalances.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">PVI Measurement</span>
-                    <span class="tech-item">MATLAB SIMULINK</span>
-                    <span class="tech-item">Transmission Lines</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Design of Passive Band Pass, Band Stop & Twin-T Notch Filter</h4>
-                        <span class="project-lab">Electrical Network Analysis | Sept-Oct 2021</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1uZz_ODL7td7D9hBXEqgz4K0dMVkXnL10/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Developed and simulated filters in LTSpice for Electrical Network Analysis. Applications in communications, audio processing, and instrumentation.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">Band Pass Filter</span>
-                    <span class="tech-item">Band Stop Filter</span>
-                    <span class="tech-item">Twin-T Notch Filter</span>
-                    <span class="tech-item">LTSpice</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Category 4: Programming & Digital -->
-        <div class="project-categories fade-in">
-            <div class="category-header">
-                <h3 class="category-title">💻 Programming & Digital Systems</h3>
-                <span class="category-count">3 Projects</span>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Audio Signal Processing with MATLAB</h4>
-                        <span class="project-lab">Signals and Systems Lab | Mar-Apr 2022</span>
-                    </div>
-                    <a href="https://drive.google.com/file/d/1DI85ZEr45fI7tZHMbfZZ-X63kwv3K17X/view" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Real-time audio recording, delay, attenuation, playback, and saving using MATLAB. Digital signal processing techniques for audio applications.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">MATLAB</span>
-                    <span class="tech-item">Audio Processing</span>
-                    <span class="tech-item">Real-time Processing</span>
-                    <span class="tech-item">DSP</span>
-                </div>
-            </div>
-
-            <div class="detailed-project">
-                <div class="project-meta">
-                    <div>
-                        <h4 style="color: var(--light); font-size: 1.2rem; margin-bottom: 0.25rem;">Binary Counter Using JK Flip Flop</h4>
-                        <span class="project-lab">Digital Logic Design Lab | Sept-Oct 2021</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/u/1/folders/15acNuQ8J7VDkv8g4wxPuSew0Zt2SGsZ1" class="project-link" target="_blank" style="margin-top: 0;">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        View Photos
-                    </a>
-                </div>
-                <p>Developed binary counter in ModelSim using JK flip-flops. Configured as universal flip-flop (SR, D, T configurations). Demonstrated input-following character.</p>
-                <div class="tech-stack">
-                    <span class="tech-item">ModelSim</span>
-                    <span class="tech-item">JK Flip-Flops</span>
-                    <span class="tech-item">Binary Counter</span>
-                    <span class="tech-item">Digital Logic</span>
-                </div>
-            </div>
-        </div>
+      </div>
     </section>
 
     <section id="education">
-        <h2 class="section-title">Education & Certifications</h2>
-        
-        <div class="education-card fade-in">
-            <div class="education-info">
-                <h3>B.Sc Electrical Engineering</h3>
-                <div class="institution">University of Engineering & Technology, Taxila</div>
-                <div style="margin-top: 0.5rem; color: var(--text);">2020 – 2024</div>
-                <div style="margin-top: 1rem;">
-                    <strong style="color: var(--primary);">Major Courses (All Grade A):</strong>
-                    <div class="course-grid">
-                        <div class="course-item">Control Systems</div>
-                        <div class="course-item">Industrial Automation</div>
-                        <div class="course-item">Power Generation</div>
-                        <div class="course-item">Power Distribution & Utilization</div>
-                        <div class="course-item">Electric Power Transmission</div>
-                        <div class="course-item">Power System Protection</div>
-                        <div class="course-item">Power System Analysis</div>
-                        <div class="course-item">High Voltage Engineering</div>
-                    </div>
-                </div>
-            </div>
-            <div class="grade">Grade A</div>
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Education</div>
+          <h2 class="section-title">Electrical engineering foundation.</h2>
+          <p class="section-note">Core preparation in power systems, protection, machines and control.</p>
+          <div class="technical-rule"></div>
         </div>
-
-        <div class="education-card fade-in">
-            <div class="education-info">
-                <h3>F.Sc Pre-Engineering</h3>
-                <div class="institution">F.G Science Degree College for Men, Wah Cantt</div>
-                <div style="margin-top: 0.5rem; color: var(--text);">2018 – 2020 | Percentage: 83.36% (917/1100)</div>
-            </div>
-            <div class="grade">83.36%</div>
+        <div>
+          <article class="edu-card reveal"><div class="edu-top"><div><h3>B.Sc. Electrical Engineering</h3><div class="edu-inst">University of Engineering & Technology, Taxila</div><div style="margin-top:6px;color:var(--muted)">2020 — 2024</div></div><div class="grade-pill">CGPA 3.59 / 4.00</div></div><div class="course-list"><span class="course">Power System Analysis</span><span class="course">Power System Protection</span><span class="course">Control Systems</span><span class="course">Industrial Automation</span><span class="course">Power Generation</span><span class="course">Power Distribution & Utilization</span><span class="course">Electrical Power Transmission</span><span class="course">High Voltage Engineering</span><span class="course">Electrical Machines</span></div></article>
+          <article class="edu-card reveal"><div class="edu-top"><div><h3>IELTS Academic</h3><div class="edu-inst">Overall Band 7.0</div><div style="margin-top:8px;color:var(--muted)">Listening 7.5 · Reading 7.5 · Writing 6.0 · Speaking 6.5</div></div><div class="grade-pill">2026</div></div></article>
         </div>
-
-        <div class="education-card fade-in">
-            <div class="education-info">
-                <h3>Matriculation (Science)</h3>
-                <div class="institution">F.G Public School No 03 for Boys, Wah Cantt</div>
-                <div style="margin-top: 0.5rem; color: var(--text);">Percentage: 85.27% (938/1100)</div>
-            </div>
-            <div class="grade">85.27%</div>
-        </div>
-
-        <div class="skills-grid" style="margin-top: 3rem;">
-            <div class="skill-category fade-in">
-                <h3>🏆 Awards & Honors</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
-                        <span style="position: absolute; left: 0;">💻</span>
-                        <strong>Prime Minister Laptop Scheme (PMYP) Phase-III</strong><br>
-                        <small>Oct 2023 | Awarded for Academic Excellence</small>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="skill-category fade-in">
-                <h3>📜 Certifications</h3>
-                <ul style="list-style: none; padding: 0; line-height: 2;">
-                    <li>• Work Smarter with Microsoft Excel (Microsoft, 20 hours, 2024)</li>
-                    <li>• ChatGPT Prompt Engineering Mastery (Udemy, 2024)</li>
-                    <li>• CCNA Networking Fundamentals (Webinar)</li>
-                    <li>• PCB Designing Workshop (SIEP)</li>
-                    <li>• MATLAB Workshop for Beginners (Organizer & Presenter)</li>
-                </ul>
-            </div>
-
-            <div class="skill-category fade-in" style="grid-column: span 2;">
-                <h3>🤝 Volunteering & Leadership</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 1rem;">
-                        <strong>Vice President, SIEP (Society of Innovative Electrical Professionals)</strong> | UET Taxila<br>
-                        <small>Apr 2023 – Apr 2024 | Managed 200+ members, organized competitions, seminars, and workshops impacting 2500+ students</small>
-                    </li>
-                    <li style="margin-bottom: 1rem;">
-                        <strong>Assistant Director, Media Club</strong> | UET Taxila<br>
-                        <small>Jan 2022 – Apr 2022 | Headed media coverage, photography, videography, and video editing</small>
-                    </li>
-                    <li>
-                        <strong>Google Maps Local Guide Level 5</strong><br>
-                        <small>2020 – Present | 100+ contributions, 60,000+ photo views, 10,000+ review views</small>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      </div>
     </section>
 
-        <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-container">
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text);">
-                Open to opportunities in Network Operations, Power Systems, and Electrical Engineering. 
-                Let's discuss how I can contribute to your team.
-            </p>
-            <div class="contact-links">
-                <a href="mailto:husnain7810@gmail.com" class="contact-link">
-                    <span>📧</span> husnain7810@gmail.com
-                </a>
-                <a href="https://linkedin.com/in/husnain-ahmed2003/" target="_blank" class="contact-link">
-                    <span>💼</span> LinkedIn
-                </a>
-            </div>
-            <div class="contact-links" style="margin-top: 1rem;">
-                <div class="contact-link" style="cursor: default;">
-                    <span>📍</span> Wah, Punjab, Pakistan
-                </div>
-            </div>
+    <section id="skills">
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Technical profile</div>
+          <h2 class="section-title">Engineering tools & methods.</h2>
+          <div class="technical-rule"></div>
         </div>
+        <div class="skills-columns">
+          <article class="skill-block reveal"><h3>Power & energy</h3><p>PSS/E · power-flow analysis · fault analysis · protection · high-voltage engineering · HelioScope · PVWatts · power-factor correction</p></article>
+          <article class="skill-block reveal"><h3>Control & automation</h3><p>MATLAB/Simulink · PID control · lead/lag compensation · PLC programming · CX-Programmer · CX-Designer · industrial automation</p></article>
+          <article class="skill-block reveal"><h3>Embedded & simulation</h3><p>Arduino · C/C++ · Proteus · LTspice · NI Multisim · ModelSim · sensor integration · PWM / servo control</p></article>
+          <article class="skill-block reveal"><h3>Networks & infrastructure</h3><p>IP/MPLS · FTTH · routing & switching · VoIP · network monitoring · fault isolation · capacity planning · service reliability</p></article>
+        </div>
+      </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Husnain Ahmed. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">
-            Electrical Engineer | Operation Engineer | Network Specialist
-        </p>
-    </footer>
 
-    <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+    <section>
+      <div class="shell section-grid">
+        <div>
+          <div class="section-kicker">Leadership & recognition</div>
+          <h2 class="section-title">Beyond coursework.</h2>
+          <div class="technical-rule"></div>
+        </div>
+        <div>
+          <details open><summary>Vice President — Society of Innovative Electrical Professionals, UET Taxila</summary><div class="detail-body">Apr 2023 — Apr 2024 · Organised technical events, competitions, seminars and student workshops, including a MATLAB workshop and engineering-focused learning activities.</div></details>
+          <details><summary>Prime Minister’s Youth Laptop Scheme — Phase III</summary><div class="detail-body">Recipient in 2023 under the national student laptop initiative.</div></details>
+          <details><summary>Selected certifications</summary><div class="detail-body">Work Smarter with Microsoft Excel (Microsoft) · PCB Designing Workshop · networking fundamentals training · MATLAB workshop organiser/presenter.</div></details>
+        </div>
+      </div>
+    </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+    <section id="contact" style="border-bottom:0">
+      <div class="shell">
+        <div class="contact-panel reveal">
+          <div>
+            <div class="section-kicker">Contact</div>
+            <h2>Open to funded graduate research opportunities for 2027.</h2>
+            <p>I am currently exploring MSc/PhD opportunities in power systems, sustainable energy, control, power electronics and closely related areas.</p>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:husnain7810@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/husnain-ahmed2003/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/engineerhusnainahmed" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  <footer>
+    <div class="shell footer-row">
+      <div>© 2026 Husnain Ahmed</div>
+      <div>Electrical Engineering · Power Systems · Control · Sustainable Energy</div>
+    </div>
+  </footer>
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Dynamic greeting based on time
-        const hour = new Date().getHours();
-        const greeting = document.querySelector('.greeting');
-        if (hour < 12) {
-            greeting.textContent = 'Good Morning, I am';
-        } else if (hour < 18) {
-            greeting.textContent = 'Good Afternoon, I am';
-        } else {
-            greeting.textContent = 'Good Evening, I am';
-        }
-    </script>
+  <script>
+    const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}})},{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
 </body>
 </html>
-
-
-
