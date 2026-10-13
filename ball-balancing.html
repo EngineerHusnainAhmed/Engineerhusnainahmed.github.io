@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Design and Control of Ball Balancing System — a 3RPS parallel-manipulator platform with PID control. Final year design project by Husnain Ahmed.">
+<title>Design and Control of Ball Balancing System — Husnain Ahmed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f0e9;--card:#faf8f4;--ink:#1c1d1f;--mut:#62656a;--line:#d9d3c7;--acc:#a4531f;--soft:#ebe6dc;--st1:#ece8df;--st2:#d3cdc0;
+--sans:"IBM Plex Sans","Segoe UI",Arial,sans-serif;--mono:"IBM Plex Mono",Consolas,monospace;color-scheme:light dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141516;--card:#1b1c1e;--ink:#ece8e0;--mut:#a3a39e;--line:#2d2f31;--acc:#e09a64;--soft:#222426}}
+:root[data-theme="dark"]{--bg:#141516;--card:#1b1c1e;--ink:#ece8e0;--mut:#a3a39e;--line:#2d2f31;--acc:#e09a64;--soft:#222426}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--acc)}
+.w{width:min(1120px,calc(100% - 40px));margin:0 auto}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .w{height:60px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+nav a{text-decoration:none}
+.back{font-weight:600;color:var(--ink)}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+nav li a{font-size:.9rem;color:var(--mut)}nav li a:hover{color:var(--ink)}
+.hero{padding:72px 0 44px}
+.eyebrow{font:500 .8rem var(--mono);color:var(--acc);margin:0 0 18px}
+h1{font-size:clamp(2.2rem,5vw,3.7rem);line-height:1.1;letter-spacing:-.025em;font-weight:600;margin:0;max-width:880px}
+.lead{font-size:1.14rem;color:var(--mut);max-width:740px;margin:22px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin:26px 0 0;padding:0;list-style:none;font:400 .85rem var(--mono);color:var(--mut)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.b{display:inline-block;font:500 .92rem var(--sans);text-decoration:none;padding:11px 18px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+.b:hover{border-color:var(--ink)}
+.b.p{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.b[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+section{padding:68px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.55rem,2.8vw,2rem);line-height:1.2;letter-spacing:-.015em;font-weight:600;margin:0 0 10px}
+.sub{color:var(--mut);max-width:680px;margin:0 0 30px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:22px}
+.card h3{margin:0 0 6px;font-size:1.05rem;font-weight:600}
+.card p{margin:0;color:var(--mut);font-size:.95rem}
+.num{font:500 .78rem var(--mono);color:var(--acc);display:block;margin-bottom:10px}
+.sim{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(290px,.85fr);gap:18px;align-items:start}
+.view{position:relative;height:clamp(380px,56vw,590px);border-radius:6px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 30%,var(--st1),var(--st2))}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+#gl:active{cursor:grabbing}
+.hint{position:absolute;left:14px;bottom:12px;font:400 .76rem var(--mono);color:#5d5a52;pointer-events:none}
+.panel{display:flex;flex-direction:column;gap:16px}
+.panel h3{margin:0 0 12px;font:500 .78rem var(--mono);color:var(--mut)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg .b{padding:9px 10px;font-size:.86rem;text-align:center}
+.sl{display:grid;grid-template-columns:30px 1fr 70px;gap:10px;align-items:center;margin-bottom:8px;font:400 .84rem var(--mono)}
+.sl output{text-align:right;color:var(--acc)}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.ro{font:400 .82rem/1.9 var(--mono);color:var(--ink);white-space:pre-wrap;margin:0}
+.note{font-size:.85rem;color:var(--mut);margin:14px 0 0;max-width:820px}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child th,tr:last-child td{border-bottom:0}
+th{width:32%;color:var(--mut);font-weight:500}
+code,pre{font-family:var(--mono)}
+pre{margin:16px 0 0;padding:14px 16px;background:var(--soft);border-radius:4px;font-size:.88rem;overflow-x:auto}
+.two{display:grid;gap:34px;grid-template-columns:1fr 1fr}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 44px;color:var(--mut);font-size:.96rem}
+.steps li:before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;color:var(--acc);font:500 .8rem var(--mono);display:grid;place-items:center}
+.steps b{color:var(--ink);display:block;font-weight:600}
+footer{padding:34px 0 56px;border-top:1px solid var(--line);color:var(--mut);font-size:.9rem}
+footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+@media(max-width:900px){nav ul{display:none}.sim,.two,.grid{grid-template-columns:1fr}.hero{padding-top:48px}}
+</style>
+</head>
+<body>
+<nav><div class="w"><a class="back" id="home-link" href="https://engineerhusnainahmed.github.io/">← Husnain Ahmed</a>
+<ul><li><a href="#simulator">Simulator</a></li><li><a href="#overview">Overview</a></li><li><a href="#control">Control</a></li><li><a href="#hardware">Hardware</a></li></ul></div></nav>
+
+<header class="hero"><div class="w">
+<p class="eyebrow">Final Year Design Project · UET Taxila · 2023–24</p>
+<h1>Design and Control of Ball Balancing System</h1>
+<p class="lead">A closed-loop platform that keeps a ball at a chosen point on a resistive touch panel. Three NEMA 17 stepper motors tilt the plate through a 3RPS parallel manipulator, while a PID controller reacts to the ball's measured position.</p>
+<ul class="meta"><li>Presented at 9th MDSRIC, 2024</li><li>PID control</li><li>Arduino</li><li>MATLAB</li><li>Real-time control</li></ul>
+<div class="btns"><a class="b p" href="#simulator">Try the simulator</a><a class="b" href="https://drive.google.com/drive/u/1/folders/16_WP1EG0a_GG9lr-f_bFoed0Sz073qm8" target="_blank" rel="noopener">Project files ↗</a></div>
+</div></header>
+
+<section id="simulator"><div class="w">
+<h2>Try the controller</h2>
+<p class="sub">This 3D model runs the same control law as the project. Choose a target pattern, tune the gains, or click the plate to move the target.</p>
+<div class="sim">
+<div class="view"><canvas id="gl" aria-label="3D model of the ball balancing platform"></canvas><div class="hint">Drag to rotate · click the plate to set a target</div></div>
+<div class="panel">
+<div class="card"><h3>Target</h3>
+<div class="seg" id="modes"><button class="b" data-m="hold" aria-pressed="true">Hold centre</button><button class="b" data-m="circle" aria-pressed="false">Circle</button><button class="b" data-m="eight" aria-pressed="false">Figure-8</button><button class="b" data-m="nudge">Nudge ball</button></div></div>
+<div class="card"><h3>PID gains</h3>
+<div class="sl"><label for="kp">kp</label><input id="kp" type="range" min="0" max="12" step=".1" value="4"><output id="okp"></output></div>
+<div class="sl"><label for="ki">ki</label><input id="ki" type="range" min="0" max="10" step=".1" value="2"><output id="oki"></output></div>
+<div class="sl"><label for="kd">kd</label><input id="kd" type="range" min="0" max="20" step=".1" value="7"><output id="okd"></output></div>
+<button class="b" id="reset" style="width:100%;margin-top:6px">Reset to project values</button></div>
+<div class="card"><h3>Live readout</h3><pre class="ro" id="ro" style="margin:0;background:none;padding:0"></pre></div>
+</div></div>
+<p class="note">Simulation using the project's controller settings, intended to illustrate the control approach. It is not recorded hardware data. With kd at zero the ball oscillates; with ki too high it overshoots.</p>
+</div></section>
+
+<section id="overview"><div class="w">
+<h2>What the system does</h2>
+<p class="sub">Balancing a ball is an unstable problem: the ball accelerates down any slope, so the platform has to keep correcting its tilt.</p>
+<div class="grid">
+<div class="card"><span class="num">01 — Sense</span><h3>Touch-panel feedback</h3><p>A resistive touch screen reports the ball's X and Y position. When no ball is detected, the platform returns to its home height.</p></div>
+<div class="card"><span class="num">02 — Decide</span><h3>PID control</h3><p>Separate X and Y loops compare the ball's position to the target and produce a tilt command every 20 ms.</p></div>
+<div class="card"><span class="num">03 — Act</span><h3>Three-leg actuation</h3><p>Inverse kinematics converts the tilt into three motor angles, and the steppers move the plate with speed scaled to the position error.</p></div>
+</div></div></section>
+
+<section id="control"><div class="w">
+<h2>Controller and firmware</h2>
+<p class="sub">Every 20 ms the firmware reads the ball position, computes the error on each axis and updates the platform tilt.</p>
+<div class="two">
+<div><ol class="steps">
+<li><b>Measure</b>Read the ball's X and Y position from the touch panel. Two reads, 10 ms apart, confirm that a ball is really absent.</li>
+<li><b>Compute the error</b>Error is the distance between the ball and the target, which is the panel centre unless a setpoint is given.</li>
+<li><b>Apply PID</b>Proportional, integral and derivative terms are summed per axis and limited to ±0.25.</li>
+<li><b>Solve kinematics</b>The tilt command and home height give each leg's arm angle, converted to motor steps.</li>
+<li><b>Move the motors</b>AccelStepper drives all three steppers, with speed and acceleration scaled to the remaining step error.</li>
+</ol><pre>out = kp·e + ki·Σe + kd·Δe</pre></div>
+<div class="card" style="padding:4px 8px"><table>
+<tr><th>kp</th><td><code>4E-4</code></td></tr><tr><th>ki</th><td><code>2E-6</code></td></tr><tr><th>kd</th><td><code>7E-3</code></td></tr>
+<tr><th>Output limit</th><td>±0.25 (platform tilt)</td></tr><tr><th>Loop period</th><td>20 ms</td></tr>
+<tr><th>Speed gain</th><td>20 steps/s per step of error</td></tr><tr><th>Home height</th><td>4.25 in</td></tr></table></div>
+</div></div></section>
+
+<section id="hardware"><div class="w">
+<h2>Mechanism and electronics</h2>
+<p class="sub">A 3RPS parallel manipulator gives the plate two tilt axes and height from three actuated legs.</p>
+<div class="card" style="padding:4px 8px"><table>
+<tr><th>Mechanism</th><td>3RPS parallel manipulator, three legs at 120°</td></tr>
+<tr><th>Actuators</th><td>3 × NEMA 17 stepper motors, 16 microsteps (3200 steps per revolution)</td></tr>
+<tr><th>Sensor</th><td>Resistive touch panel read through the TouchScreen library</td></tr>
+<tr><th>Controller</th><td>Arduino, with AccelStepper and MultiStepper for motion control</td></tr>
+<tr><th>Link lengths</th><td>Base radius 2.000 in · arm 1.750 in · rod 3.125 in · platform radius 3.669 in</td></tr>
+<tr><th>Debugging</th><td>Serial output at 115200 baud (X/Y output and motor speed)</td></tr></table></div>
+</div></section>
+
+<footer><div class="w"><span>© 2026 Husnain Ahmed</span><span><a href="https://engineerhusnainahmed.github.io/" id="home-link2">Back to portfolio</a> · <a href="mailto:husnain7810@gmail.com">husnain7810@gmail.com</a></span></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function $(i){return document.getElementById(i)}
+try{
+var cv=$("gl"),wrap=cv.parentNode,R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=.95;
+var S=new THREE.Scene(),cam=new THREE.PerspectiveCamera(34,1,.1,200);
+/* studio reflections: a small softbox room baked with PMREM so metals and the steel ball reflect something real */
+(function(){var pm=new THREE.PMREMGenerator(R),es=new THREE.Scene();
+ es.add(new THREE.Mesh(new THREE.BoxGeometry(40,40,40),new THREE.MeshBasicMaterial({color:0x8a867d,side:THREE.BackSide})));
+ function panel(x,y,z,w,h,c){var m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:c,side:THREE.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);es.add(m)}
+ panel(0,19,0,22,22,0xffffff);panel(-18,6,8,12,14,0xfff4e6);panel(18,4,-6,10,16,0xe8f1ff);panel(0,3,-19,26,8,0xd9d4c8);
+ S.environment=pm.fromScene(es,.03).texture;pm.dispose()})();
+S.add(new THREE.HemisphereLight(0xffffff,0x6b665c,.35));
+var key=new THREE.DirectionalLight(0xfff3e2,1.0);key.position.set(7,16,8);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.bias=-.0004;
+var sc=key.shadow.camera;sc.left=-9;sc.right=9;sc.top=9;sc.bottom=-9;sc.near=1;sc.far=45;S.add(key);
+function M(c,m,r){return new THREE.MeshStandardMaterial({color:c,metalness:m,roughness:r})}
+var mBlack=M(0x17191c,.55,.42),mMotor=M(0x202327,.35,.55),mSteel=M(0xc9ced3,.95,.25),mArm=M(0xb4571f,.7,.34),mBrass=M(0xb38f55,.95,.3),mRubber=M(0x0f1012,0,.9);
+var d=2,e=3.125,f=1.75,g=3.669,hz=3.6,UP=new THREE.Vector3(0,1,0),i;
+function sh(m){m.castShadow=true;m.receiveShadow=true;return m}
+/* base */
+var plate=sh(new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.7,.36,96),mBlack));plate.position.y=-1.1;S.add(plate);
+var groove=new THREE.Mesh(new THREE.TorusGeometry(4.75,.03,6,96),M(0x3a3e43,.6,.4));groove.rotation.x=Math.PI/2;groove.position.y=-.915;S.add(groove);
+for(i=0;i<3;i++){var a0=i*2*Math.PI/3+Math.PI/6,ft=sh(new THREE.Mesh(new THREE.CylinderGeometry(.5,.55,.28,24),mRubber));ft.position.set(Math.cos(a0)*4.4,-1.42,Math.sin(a0)*4.4);S.add(ft)}
+var floor=new THREE.Mesh(new THREE.CircleGeometry(60,48),new THREE.ShadowMaterial({opacity:.22}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.56;floor.receiveShadow=true;S.add(floor);
+/* arm profile: tapered stadium with a pivot hole */
+var as=new THREE.Shape();as.moveTo(0,.24);as.lineTo(f,.17);as.absarc(f,0,.17,Math.PI/2,-Math.PI/2,true);as.lineTo(0,-.24);as.absarc(0,0,.24,-Math.PI/2,Math.PI/2,true);
+var ah=new THREE.Path();ah.absarc(f,0,.07,0,Math.PI*2,true);as.holes.push(ah);
+var armGeo=new THREE.ExtrudeGeometry(as,{depth:.14,bevelEnabled:true,bevelSize:.025,bevelThickness:.025,bevelSegments:2,curveSegments:20});armGeo.translate(0,0,-.07);
+var rodGeo=new THREE.CylinderGeometry(.055,.055,1,14);rodGeo.rotateZ(Math.PI/2);
+var legs=[];
+for(i=0;i<3;i++){var al=Math.PI/2+i*2*Math.PI/3,G=new THREE.Group();G.position.set(Math.cos(al)*d,0,Math.sin(al)*d);G.rotation.y=-al;S.add(G);
+ var body=sh(new THREE.Mesh(new THREE.BoxGeometry(1.65,1.65,1.5),mMotor));body.position.z=-1.0;G.add(body);
+ var cap=sh(new THREE.Mesh(new THREE.BoxGeometry(1.6,1.6,.12),mBlack));cap.position.z=-1.82;G.add(cap);
+ var fl=sh(new THREE.Mesh(new THREE.BoxGeometry(1.65,1.65,.2),mSteel));fl.position.z=-.17;G.add(fl);
+ var boss=sh(new THREE.Mesh(new THREE.CylinderGeometry(.46,.46,.06,32),mSteel));boss.rotation.x=Math.PI/2;boss.position.z=-.04;G.add(boss);
+ [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(s){var sc2=new THREE.Mesh(new THREE.CylinderGeometry(.07,.07,.05,10),mBlack);sc2.rotation.x=Math.PI/2;sc2.position.set(s[0]*.62,s[1]*.62,-.06);G.add(sc2)});
+ var br=sh(new THREE.Mesh(new THREE.BoxGeometry(1.9,.14,2.5),mBlack));br.position.set(0,-.88,-1.0);G.add(br);
+ var shaft=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,.62,16),mSteel);shaft.rotation.x=Math.PI/2;shaft.position.z=.2;G.add(shaft);
+ var A=new THREE.Group();G.add(A);
+ A.add(sh(new THREE.Mesh(armGeo,mArm)));
+ var hub=sh(new THREE.Mesh(new THREE.CylinderGeometry(.27,.27,.22,28),mSteel));hub.rotation.x=Math.PI/2;hub.position.z=.1;A.add(hub);
+ var jE=sh(new THREE.Mesh(new THREE.SphereGeometry(.17,20,14),mBrass));jE.position.set(f,0,.02);A.add(jE);
+ var rod=sh(new THREE.Mesh(rodGeo,mSteel));G.add(rod);
+ var jP=sh(new THREE.Mesh(new THREE.SphereGeometry(.17,20,14),mBrass));G.add(jP);
+ legs.push({al:al,A:A,rod:rod,jP:jP,th:0})}
+/* platform: black frame, glass touch panel with printed grid */
+var PL=new THREE.Group();PL.position.y=hz;S.add(PL);
+var cvs=document.createElement("canvas");cvs.width=cvs.height=512;var cx=cvs.getContext("2d");
+cx.fillStyle="#2b2f33";cx.fillRect(0,0,512,512);cx.strokeStyle="rgba(200,205,210,.16)";cx.lineWidth=1.5;
+for(i=0;i<=512;i+=32){cx.beginPath();cx.moveTo(i,0);cx.lineTo(i,512);cx.moveTo(0,i);cx.lineTo(512,i);cx.stroke()}
+cx.strokeStyle="rgba(224,154,100,.9)";cx.lineWidth=2.5;cx.beginPath();cx.moveTo(240,256);cx.lineTo(272,256);cx.moveTo(256,240);cx.lineTo(256,272);cx.stroke();
+var tex=new THREE.CanvasTexture(cvs);tex.anisotropy=4;
+var pframe=sh(new THREE.Mesh(new THREE.CylinderGeometry(g,g,.2,96),mBlack));PL.add(pframe);
+var disc=new THREE.Mesh(new THREE.CylinderGeometry(g-.2,g-.2,.07,96),[mBlack,new THREE.MeshStandardMaterial({map:tex,metalness:.3,roughness:.18}),mBlack]);disc.position.y=.13;disc.receiveShadow=true;PL.add(disc);
+var tgt=new THREE.Mesh(new THREE.RingGeometry(.3,.4,40),new THREE.MeshBasicMaterial({color:0xe09a64,side:THREE.DoubleSide}));tgt.rotation.x=-Math.PI/2;tgt.position.y=.17;PL.add(tgt);
+var ball=sh(new THREE.Mesh(new THREE.SphereGeometry(.42,48,32),M(0xf2f4f6,1,.06)));PL.add(ball);
+var dot=new THREE.Mesh(new THREE.SphereGeometry(.06,10,8),new THREE.MeshBasicMaterial({color:0xb4571f}));dot.position.set(.42,0,0);ball.add(dot);
+
+/* controller: same structure as the project's PID (error, summed integral, per-step derivative, ±0.25 limit, 20 ms loop) */
+var P0={kp:4e-4,ki:2e-6,kd:7e-3},kp=P0.kp,ki=P0.ki,kd=P0.kd,DT=.02,KS=37700,SC=3.2/500;
+var bx,by,vx,vy,tx,ty,er,ep,ig,out,spx,spy,mode,simT,acc,last=performance.now(),seed=7;
+function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function init(){bx=260;by=-180;vx=vy=tx=ty=0;er=[0,0];ep=[0,0];ig=[0,0];out=[0,0];spx=spy=0;simT=0;acc=0}
+init();mode="hold";
+function step(){
+ if(mode==="circle"){spx=240*Math.cos(simT*1.1);spy=240*Math.sin(simT*1.1)}else if(mode==="eight"){spx=270*Math.sin(simT*.9);spy=150*Math.sin(simT*1.8)}else if(mode==="hold"){spx=spy=0}
+ simT+=DT;var p=[bx+(rnd()-.5)*4,by+(rnd()-.5)*4],s=[spx,spy];
+ for(var i=0;i<2;i++){ep[i]=er[i];er[i]=s[i]-p[i];ig[i]=clamp(ig[i]+er[i]+ep[i],-125000,125000);out[i]=clamp(kp*er[i]+ki*ig[i]+kd*(er[i]-ep[i]),-.25,.25)}
+ tx+=(out[0]-tx)*.35;ty+=(out[1]-ty)*.35;
+ vx+=(KS*tx-.15*vx)*DT;vy+=(KS*ty-.15*vy)*DT;bx+=vx*DT;by+=vy*DT;
+ var r=Math.hypot(bx,by);if(r>470){var nx=bx/r,ny=by/r,vr=vx*nx+vy*ny;if(vr>0){vx-=1.4*vr*nx;vy-=1.4*vr*ny}bx=nx*470;by=ny*470}}
+var btns=document.querySelectorAll("#modes button");
+function setMode(m){mode=m;btns.forEach(function(o){if(o.dataset.m!=="nudge")o.setAttribute("aria-pressed",o.dataset.m===m?"true":"false")})}
+btns.forEach(function(b){b.addEventListener("click",function(){var m=b.dataset.m;
+ if(m==="nudge"){var a=rnd()*6.283;vx+=1300*Math.cos(a);vy+=1300*Math.sin(a);return}setMode(m)})});
+function bind(id,unit,fn){var el=$(id),o=$("o"+id);function u(){var v=parseFloat(el.value);fn(v*unit);o.textContent=v.toFixed(1)+"e"+(unit===1e-4?"-4":unit===1e-6?"-6":"-3")}el.addEventListener("input",u);el._u=u;u()}
+bind("kp",1e-4,function(v){kp=v});bind("ki",1e-6,function(v){ki=v});bind("kd",1e-3,function(v){kd=v});
+$("reset").addEventListener("click",function(){$("kp").value=4;$("ki").value=2;$("kd").value=7;["kp","ki","kd"].forEach(function(k){$(k)._u()});init();setMode("hold")});
+var az=.75,el=.5,rad=22,drag=null,moved=0,ray=new THREE.Raycaster(),v2=new THREE.Vector2();
+cv.addEventListener("pointerdown",function(ev){drag={x:ev.clientX,y:ev.clientY};moved=0;cv.setPointerCapture(ev.pointerId)});
+cv.addEventListener("pointermove",function(ev){if(!drag)return;var dx=ev.clientX-drag.x,dy=ev.clientY-drag.y;moved+=Math.abs(dx)+Math.abs(dy);drag={x:ev.clientX,y:ev.clientY};az-=dx*.008;el=clamp(el+dy*.006,.12,1.35)});
+cv.addEventListener("pointerup",function(ev){drag=null;if(moved>6)return;var b=cv.getBoundingClientRect();v2.set((ev.clientX-b.left)/b.width*2-1,-(ev.clientY-b.top)/b.height*2+1);ray.setFromCamera(v2,cam);
+ var h=ray.intersectObject(disc)[0];if(h){var l=PL.worldToLocal(h.point.clone()),x=l.x/SC,y=l.z/SC,r=Math.hypot(x,y);if(r>420){x*=420/r;y*=420/r}spx=x;spy=y;setMode("point")}});
+cv.addEventListener("pointercancel",function(){drag=null});
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;rad=cam.aspect<1?32:cam.aspect<1.3?27:23;cam.updateProjectionMatrix()}
+size();if("ResizeObserver" in window)new ResizeObserver(size).observe(wrap);else addEventListener("resize",size);
+var nv=new THREE.Vector3(),q=new THREE.Quaternion(),q2=new THREE.Quaternion(),ax=new THREE.Vector3(),pbx=bx,pby=by,fr=0,ro=$("ro"),visible=true;
+if("IntersectionObserver" in window)new IntersectionObserver(function(e){visible=e[0].isIntersecting}).observe(wrap);
+function frame(now){requestAnimationFrame(frame);var dt=Math.min(.05,(now-last)/1000);last=now;if(!visible)return;
+ acc+=dt;while(acc>=DT){step();acc-=DT}
+ cam.position.set(Math.sin(az)*Math.cos(el)*rad,Math.sin(el)*rad+1.2,Math.cos(az)*Math.cos(el)*rad);cam.lookAt(0,1.2,0);
+ nv.set(tx,1,ty).normalize();q.setFromUnitVectors(UP,nv);PL.quaternion.copy(q);
+ ball.position.set(bx*SC,.58,by*SC);tgt.position.set(spx*SC,.17,spy*SC);
+ var dx=(bx-pbx)*SC,dz=(by-pby)*SC,ds=Math.hypot(dx,dz);pbx=bx;pby=by;
+ if(ds>1e-5){ax.set(dz,0,-dx).normalize();ball.quaternion.premultiply(q2.setFromAxisAngle(ax,ds/.42))}
+ for(var i=0;i<3;i++){var L=legs[i],a=nv.x*Math.cos(L.al)+nv.z*Math.sin(L.al),rho=Math.hypot(a,nv.y),r=g*nv.y/rho,y=hz-g*a/rho,ux=r-d,Ld=Math.hypot(ux,y),K=(f*f+Ld*Ld-e*e)/(2*f),th=Math.atan2(y,ux)-Math.acos(clamp(K/Ld,-1,1));
+  L.th=th;L.A.rotation.z=th;var ex=f*Math.cos(th),ey=f*Math.sin(th),rx=ux-ex,ry=y-ey;
+  L.rod.position.set((ux+ex)/2,(y+ey)/2,.02);L.rod.rotation.z=Math.atan2(ry,rx);L.rod.scale.x=Math.hypot(rx,ry);L.jP.position.set(ux,y,.02)}
+ if(++fr%6===0)ro.textContent="target     "+spx.toFixed(0)+", "+spy.toFixed(0)+"\nball       "+bx.toFixed(0)+", "+by.toFixed(0)+"\nerror      "+er[0].toFixed(0)+", "+er[1].toFixed(0)+"\nX / Y out  "+out[0].toFixed(3)+" / "+out[1].toFixed(3)+"\narm angles "+legs.map(function(l){return (l.th*57.296).toFixed(0)}).join(" / ")+"°";
+ R.render(S,cam)}
+requestAnimationFrame(frame);
+}catch(err){var h=document.querySelector(".view");if(h)h.insertAdjacentHTML("beforeend",'<p style="position:absolute;inset:0;display:grid;place-items:center;color:#5d5a52;margin:0;padding:20px;text-align:center">The 3D simulator needs WebGL, which is unavailable in this browser.</p>');console.error(err)}
+})();
+</script>
+</body>
+</html>
